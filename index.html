@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Giphy API</title>
+</head>
+
+<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    // Example queryURL for Giphy API
+    $("button").on("click", function() {
+    var animal = $(this).attr("data-animal");
+    var queryURL = "https://api.giphy.com/v1/gifs/trending" 
+    + animal + "?api_key=dc6zaTOxFJmzC";
+
+    $.ajax({
+      url: queryURL,
+      method: 'GET'
+    }).then(function(response) {
+      console.log(response);
+          var results = response.data;
+
+          for (var i = 0; i < results.length; i++) {
+            var gifDiv = $("<div class='item'>");
+
+            var animalImage = $("<img>");
+            animalImage.attr("src", results[i].images.fixed_height.url);
+
+      
+            gifDiv.prepend(animalImage);
+
+            $("#gifs-appear-here").prepend(gifDiv);
+          }
+        });
+    }
+  </script>
+  <div id="animalButtons">
+
+  </div>
+
+  <form id= "animal-form">
+    <label for="animal-input">Add an animal</label>
+    <input type="text" id="animal-input"><br>
+    
+    <input id="addAnimal" type="submit" value="Submit">
+  </form>
+
+  <div id="animals">
+
+  </div>
+</body>
+
+</html>
